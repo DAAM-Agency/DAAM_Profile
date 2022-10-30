@@ -62,3 +62,4 @@ transaction(name: String, email: String?, about: String?, description: String?, 
         self.signer.link<&DAAM_Profile.User{DAAM_Profile.Public}>(DAAM_Profile.publicPath, target: DAAM_Profile.storagePath)
     }
 }
+ 

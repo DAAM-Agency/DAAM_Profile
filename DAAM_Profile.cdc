@@ -96,6 +96,7 @@ pub contract DAAM_Profile {
 
         // Set Functions
         pub fun setEmail(_ email: String?) {
+            pre { self.verifyEmail(email) : "Invalid email address." }
             self.email = email
             emit UpdateEmail(email: email)
         }
@@ -105,7 +106,7 @@ pub contract DAAM_Profile {
             emit UpdateAbout(about: about)
         }
 
-        pub fun setDesc(_ desc: String?)   {
+        pub fun setDescription(_ desc: String?)   {
             self.description = desc
             emit UpdateDescription(description: desc)
         }
@@ -190,7 +191,7 @@ pub contract DAAM_Profile {
     // Initialization
     init() {
         let defaultPath = "DAAM_Profile"
-        self.publicPath  = PublicPath(identifier: defaultPath)!
+        self.publicPath  = PublicPath(identifier : defaultPath)!
         self.storagePath = StoragePath(identifier: defaultPath)!
         emit ContractInitialized()
     }      
