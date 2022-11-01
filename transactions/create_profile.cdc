@@ -1,4 +1,4 @@
-// createProfile.cdc
+// create_profile.cdc
 
 import MetadataViews from 0xf8d6e0586b0a20c7
 import DAAM_Profile  from 0x509abbf4f85f3d73
@@ -15,15 +15,18 @@ pub fun setFile(type: String, data: String, path: String?): AnyStruct{MetadataVi
     }
 }
 
-transaction(name: String, email: String?, about: String?, description: String?, web: String?, social: {String:String}?, notes: {String:String}?,
+transaction(name: String, emailName: String?, emailAt:String?, emailDot: String?, about: String?, description: String?, web: String?, social: {String:String}?, notes: {String:String}?,
     avatarType: String, avatar: String?, avatar_ipfsPath: String?,
     heroImageType: String, heroImage: String?, heroImage_ipfsPath: String?
     )
 {
     let signer: AuthAccount
     let name  : String
-    let email : String?
     let about : String?
+    
+    let emailName : String?
+    let emailAt   : String?
+    let emailDot  : String?
 
     let description: String?
 
@@ -36,8 +39,11 @@ transaction(name: String, email: String?, about: String?, description: String?, 
     prepare(signer: AuthAccount) {
         self.signer = signer
         self.name   = name
-        self.email  = email
         self.about  = about
+        
+        self.emailName  = emailName
+        self.emailAt    = emailAt 
+        self.emailDot   = emailDot
 
         self.description = description
 
@@ -50,16 +56,20 @@ transaction(name: String, email: String?, about: String?, description: String?, 
 
     pre {
         (avatarType != "ipfs" && avatar_ipfsPath == nil) || (avatarType == "ipfs" && avatar_ipfsPath != nil) : "Avator Setting are Incorrect."
-        (heroImageType != "ipfs" && heroImage_ipfsPath != nil) || (heroImageType == "ipfs" && heroImage_ipfsPath != nil) : "Hero image Settings are Incorrect."
+        (heroImageType != "ipfs" && heroImage_ipfsPath == nil) || (heroImageType == "ipfs" && heroImage_ipfsPath != nil) : "Hero image Settings are Incorrect."
+        (emailName==nil && emailAt==nil && emailDot==nil) || (emailName!=nil && emailAt!=nil && emailDot!=nil) : "Invalid Email Entered"
     }
 
     execute {
         let profile <- DAAM_Profile.createProfile(
-            name:self.name, email:self.email, about:self.about, description:self.description, web:self.web, social:self.social,
+            name:self.name, about:self.about, description:self.description, web:self.web, social:self.social,
             avatar:self.avatar, heroImage:self.heroImage, notes:self.notes
         )
+        profile.setEmail(name: self.emailName, at: self.emailAt, dot: self.emailDot)
+        
         self.signer.save<@DAAM_Profile.User>(<-profile, to: DAAM_Profile.storagePath)
         self.signer.link<&DAAM_Profile.User{DAAM_Profile.Public}>(DAAM_Profile.publicPath, target: DAAM_Profile.storagePath)
+        log("DAAM Profile Created: ".concat(self.signer.address.toString()))
     }
 }
  

@@ -1,6 +1,6 @@
 // remove_web.cdc
 
-import DAAM_Profile  from 0x192440c99cb17282
+import DAAM_Profile  from 0x509abbf4f85f3d73
 
 transaction(web: String) {
     let web  : String

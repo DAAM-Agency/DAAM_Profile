@@ -1,7 +1,7 @@
 // set_avatar.cdc
 
 import MetadataViews from 0xf8d6e0586b0a20c7
-import DAAM_Profile  from 0x192440c99cb17282
+import DAAM_Profile  from 0x509abbf4f85f3d73
 import DAAM          from 0xfd43f9148d4b725d
 
 // Returns correct MetadataViews.File deping on type of data. Pic, Http, ipfs
