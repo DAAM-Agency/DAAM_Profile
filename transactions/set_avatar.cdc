@@ -2,7 +2,7 @@
 
 import MetadataViews from 0x1d7e57aa55817448
 import DAAM_Profile  from 0x509abbf4f85f3d73
-import DAAM          from 0xfd43f9148d4b725d
+import DAAM          from 0x7db4d10c78bad30a
 
 // Returns correct MetadataViews.File deping on type of data. Pic, Http, ipfs
 pub fun setFile(type: String, data: String, path: String?): AnyStruct{MetadataViews.File} {
