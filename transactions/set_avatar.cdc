@@ -1,6 +1,6 @@
 // set_avatar.cdc
 
-import MetadataViews from 0xf8d6e0586b0a20c7
+import MetadataViews from 0x1d7e57aa55817448
 import DAAM_Profile  from 0x509abbf4f85f3d73
 import DAAM          from 0xfd43f9148d4b725d
 
