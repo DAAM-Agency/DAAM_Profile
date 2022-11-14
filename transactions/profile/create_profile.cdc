@@ -1,4 +1,5 @@
 // create_profile.cdc
+// Used to create a DAAM_Profile.
 
 import MetadataViews from 0x1d7e57aa55817448
 import DAAM_Profile  from 0x509abbf4f85f3d73
