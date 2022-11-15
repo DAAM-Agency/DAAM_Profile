@@ -90,11 +90,13 @@ pub contract DAAM_Profile {
         }
 
         priv fun validateEmailPortion(_ ref: [UInt8]) {
+            var plus_counter = 0
             for r in ref {
-                if ((r < 97 || r > 122) && r != 95) && (r < 48 || r > 57) {  // ascii: 97='a', 122='z', 95='_', '0', '9'
-                    log(r)
+                if r == 43 { plus_counter = plus_counter + 1 }
+                if ((r < 97 || r > 122) && r != 95 && r != 43) && (r < 48 || r > 57) {  // ascii: 97='a', 122='z', 95='_', 43='+', 48='0', 57='9'
                     panic("Invalid Email Entered")
                 }
+                if plus_counter > 1 { panic("Invalid Email Entered") }
             }
         }
 
